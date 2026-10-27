@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -55,6 +56,33 @@ async function seedProducts(): Promise<void> {
       create: product,
     });
   }
+
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  const userPassword = process.env.SEED_USER_PASSWORD;
+  if (!adminPassword || !userPassword) {
+    throw new Error("Define SEED_ADMIN_PASSWORD y SEED_USER_PASSWORD antes de ejecutar el seed.");
+  }
+
+  await prisma.user.upsert({
+    where: { email: "admin@sportzone.test" },
+    update: { name: "Admin SportZone", passwordHash: await bcrypt.hash(adminPassword, 12), role: "admin" },
+    create: {
+      name: "Admin SportZone",
+      email: "admin@sportzone.test",
+      passwordHash: await bcrypt.hash(adminPassword, 12),
+      role: "admin",
+    },
+  });
+  await prisma.user.upsert({
+    where: { email: "usuario@sportzone.test" },
+    update: { name: "Usuario SportZone", passwordHash: await bcrypt.hash(userPassword, 12), role: "user" },
+    create: {
+      name: "Usuario SportZone",
+      email: "usuario@sportzone.test",
+      passwordHash: await bcrypt.hash(userPassword, 12),
+      role: "user",
+    },
+  });
 }
 
 seedProducts()

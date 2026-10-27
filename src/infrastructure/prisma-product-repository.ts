@@ -26,4 +26,19 @@ export class PrismaProductRepository implements ProductRepository {
   findById(id: number) {
     return prisma.product.findUnique({ where: { id } });
   }
+
+  create(data: { name: string; category: string; price: number; description: string; image: string }) {
+    return prisma.product.create({ data });
+  }
+
+  update(
+    id: number,
+    data: { name: string; category: string; price: number; description: string; image: string },
+  ) {
+    return prisma.product.update({ where: { id }, data });
+  }
+
+  async delete(id: number) {
+    await prisma.product.delete({ where: { id } });
+  }
 }

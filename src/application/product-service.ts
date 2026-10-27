@@ -1,4 +1,5 @@
-import type { ProductPage, ProductRepository } from "../domain/product";
+import { HttpError } from "../domain/errors";
+import type { ProductInput, ProductPage, ProductRepository } from "../domain/product";
 
 export class ProductService {
   constructor(private readonly products: ProductRepository) {}
@@ -10,11 +11,23 @@ export class ProductService {
   async get(id: number) {
     const product = await this.products.findById(id);
     if (!product) {
-      const error = new Error("Producto no encontrado");
-      Object.assign(error, { statusCode: 404 });
-      throw error;
+      throw new HttpError("Producto no encontrado", 404);
     }
 
     return product;
+  }
+
+  create(data: ProductInput) {
+    return this.products.create(data);
+  }
+
+  async update(id: number, data: ProductInput) {
+    await this.get(id);
+    return this.products.update(id, data);
+  }
+
+  async delete(id: number) {
+    await this.get(id);
+    await this.products.delete(id);
   }
 }

@@ -14,6 +14,12 @@ if (!frontendUrl) {
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL es obligatorio.");
 }
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+  throw new Error("JWT_SECRET debe tener al menos 32 caracteres.");
+}
+if (!process.env.JWT_EXPIRES_IN) {
+  throw new Error("JWT_EXPIRES_IN es obligatorio.");
+}
 
 const app = createApp(frontendUrl);
 const server = app.listen(port, () => {
