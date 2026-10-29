@@ -41,17 +41,19 @@ Las rutas protegidas reciben `Authorization: Bearer <token>`. Sin sesión la API
 
 Consulta `.env.example`. El archivo `.env` contiene valores locales y no debe subirse al repositorio.
 
-## Preparar el despliegue del backend en Render
+## Despliegue actual en Render
 
-El archivo `render.yaml` define el servicio web gratuito, la versión de Node, la comprobación de salud y las variables necesarias. Al crear el Blueprint, Render solicitará `DATABASE_URL` y `FRONTEND_URL`; configura una URL PostgreSQL de producción y el origen exacto del frontend en Vercel. Render genera `JWT_SECRET` y ejecuta `prisma migrate deploy` antes de iniciar la API.
+- API: https://sportzone-api-m6ag.onrender.com
+- Estado: https://sportzone-api-m6ag.onrender.com/health
+- Frontend autorizado por CORS: https://frontend-entrega3-ghfzule7h-matias-664b.vercel.app
 
-Después de crear la base de producción, carga los datos iniciales **una sola vez** desde un entorno confiable, con `DATABASE_URL`, `SEED_ADMIN_PASSWORD` y `SEED_USER_PASSWORD` configuradas para esa base, y ejecuta `npm run db:seed`. No agregues las credenciales de producción a este repositorio ni uses las claves de ejemplo.
+El archivo `render.yaml` define la versión de Node, la comprobación de salud y las variables necesarias. El servicio ejecuta `prisma migrate deploy` antes de iniciar la API. La base PostgreSQL y el backend están en Oregon. El catálogo de producción tiene nueve productos.
 
-Este Blueprint solo prepara la configuración: no crea ni despliega recursos hasta que lo conectes y lo apliques desde Render. Completa ese paso cuando tengas la URL de Vercel; después, registra las URLs reales en el README de entrega.
+Si se recrea la base, carga los datos iniciales desde un entorno confiable con `DATABASE_URL`, `SEED_ADMIN_PASSWORD` y `SEED_USER_PASSWORD` configuradas solo en el entorno de ejecución, y ejecuta `npm run db:seed`. El seed es repetible por nombre de producto/correo; no guardes contraseñas ni secretos de producción en Git ni uses las claves de ejemplo en producción.
 
 ## Verificación automatizada del despliegue
 
-Cuando Render y Vercel estén desplegados y el seed de producción esté listo, ejecuta el verificador desde una copia local actualizada del backend. Configura estas variables en la terminal, sin agregarlas a ningún archivo versionado:
+Para comprobar un despliegue, ejecuta el verificador desde el repositorio backend. Configura estas variables en la terminal, sin agregarlas a ningún archivo versionado:
 
 - `API_BASE_URL`: origen HTTPS de la API de Render, sin `/api` al final.
 - `FRONTEND_URL`: origen exacto de Vercel, sin ruta final.
@@ -63,6 +65,10 @@ En PowerShell, establece las cuatro variables de entorno para la terminal y ejec
 npm run verify:deployment
 ```
 
-El verificador comprueba salud, CORS, catálogo y paginación, validación de parámetros, respuestas `401`/`403`, registro, correo duplicado, login, creación y consulta de una solicitud, y CRUD de un producto temporal como admin. Requiere una base de producción inicializada y conectividad a la API. Crea un usuario y una solicitud de prueba permanentes; informa el correo generado para poder reconocerlos. El producto temporal se elimina al terminar. Ejecuta primero en un entorno de prueba si no quieres dejar registros de verificación en la base de producción.
+Verificación realizada el 29 de octubre de 2026 contra los servicios publicados: salud HTTPS, CORS del frontend, catálogo paginado con productos, validación de paginación, respuestas `401`/`403`, registro, correo duplicado, login, creación y consulta de solicitud, y CRUD de un producto temporal como admin. Todas las comprobaciones pasaron.
 
-El script no sustituye la comprobación visual del frontend. Para la captura solicitada por la rúbrica, inicia sesión como usuario, abre DevTools → Network, realiza una acción protegida como consultar “Mis solicitudes” y captura la petición mostrando el encabezado `Authorization`. **Oculta el valor del token antes de guardar o entregar la captura** y no la subas a Git.
+El verificador crea un usuario y una solicitud de prueba permanentes; informa el correo generado para poder reconocerlos. El producto temporal se elimina al terminar. Ejecuta primero en un entorno de prueba si no quieres dejar registros de verificación en producción.
+
+La interfaz también se probó en producción: la sesión del usuario sobrevivió a una recarga, se creó una solicitud desde el sitio y apareció en “Mis solicitudes”. La petición protegida `GET /api/requests/mias` respondió `200` con un encabezado Bearer; el token no se mostró ni registró.
+
+Para completar la evidencia visual de la rúbrica, inicia sesión como usuario, abre DevTools → Network, consulta “Mis solicitudes” y guarda una captura mostrando el encabezado `Authorization`. **Oculta el valor del token antes de guardar o entregar la captura** y no la subas a Git.

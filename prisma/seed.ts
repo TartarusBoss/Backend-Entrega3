@@ -37,7 +37,7 @@ const products = [
     category: "futbol",
     price: 75000,
     description: "Tela transpirable con tecnología de secado rápido.",
-    image: "https://futboldeprimera.com.co/wp-content/uploads/PhotoRoom-20240112_105329_5.png",
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80",
   },
   {
     name: "Aro de Básquetbol Portátil",
@@ -45,6 +45,27 @@ const products = [
     price: 350000,
     description: "Ajustable en altura con base rellenable de agua o arena.",
     image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&q=80",
+  },
+  {
+    name: "Conjunto de Conos de Entrenamiento",
+    category: "futbol",
+    price: 45000,
+    description: "Conos flexibles y resistentes para ejercicios de velocidad y coordinación.",
+    image: "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?w=400&q=80",
+  },
+  {
+    name: "Balón de Básquetbol para Exterior",
+    category: "basket",
+    price: 98000,
+    description: "Superficie de buen agarre, diseñada para entrenar en canchas exteriores.",
+    image: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=400&q=80",
+  },
+  {
+    name: "Saco de Boxeo de Entrenamiento",
+    category: "mma",
+    price: 280000,
+    description: "Saco de alta resistencia para practicar golpes y combinaciones.",
+    image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=400&q=80",
   },
 ];
 
