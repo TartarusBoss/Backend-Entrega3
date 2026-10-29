@@ -45,7 +45,7 @@ Consulta `.env.example`. El archivo `.env` contiene valores locales y no debe su
 
 - API: https://sportzone-api-m6ag.onrender.com
 - Estado: https://sportzone-api-m6ag.onrender.com/health
-- Frontend autorizado por CORS: https://frontend-entrega3-ghfzule7h-matias-664b.vercel.app
+- Frontend autorizado por CORS: https://frontend-entrega3.vercel.app
 
 El archivo `render.yaml` define la versión de Node, la comprobación de salud y las variables necesarias. El servicio ejecuta `prisma migrate deploy` antes de iniciar la API. La base PostgreSQL y el backend están en Oregon. El catálogo de producción tiene nueve productos.
 
