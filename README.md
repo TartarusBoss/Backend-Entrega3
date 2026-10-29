@@ -49,7 +49,7 @@ Consulta `.env.example`. El archivo `.env` contiene valores locales y no debe su
 
 El archivo `render.yaml` define la versión de Node, la comprobación de salud y las variables necesarias. El servicio ejecuta `prisma migrate deploy` antes de iniciar la API. La base PostgreSQL y el backend están en Oregon. El catálogo de producción tiene nueve productos.
 
-Si se recrea la base, carga los datos iniciales desde un entorno confiable con `DATABASE_URL`, `SEED_ADMIN_PASSWORD` y `SEED_USER_PASSWORD` configuradas solo en el entorno de ejecución, y ejecuta `npm run db:seed`. El seed es repetible por nombre de producto/correo; no guardes contraseñas ni secretos de producción en Git ni uses las claves de ejemplo en producción.
+Si se recrea la base, carga los datos iniciales desde un entorno confiable con `DATABASE_URL`, `SEED_ADMIN_PASSWORD` y `SEED_USER_PASSWORD` configuradas solo en el entorno de ejecución, y ejecuta `npm run db:seed`. El seed es repetible por nombre de producto/correo
 
 ## Verificación automatizada del despliegue
 
@@ -71,4 +71,4 @@ El verificador crea un usuario y una solicitud de prueba permanentes; informa el
 
 La interfaz también se probó en producción: la sesión del usuario sobrevivió a una recarga, se creó una solicitud desde el sitio y apareció en “Mis solicitudes”. La petición protegida `GET /api/requests/mias` respondió `200` con un encabezado Bearer; el token no se mostró ni registró.
 
-Para completar la evidencia visual de la rúbrica, inicia sesión como usuario, abre DevTools → Network, consulta “Mis solicitudes” y guarda una captura mostrando el encabezado `Authorization`. **Oculta el valor del token antes de guardar o entregar la captura** y no la subas a Git.
+
