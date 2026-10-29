@@ -40,3 +40,11 @@ Las rutas protegidas reciben `Authorization: Bearer <token>`. Sin sesión la API
 ## Variables de entorno
 
 Consulta `.env.example`. El archivo `.env` contiene valores locales y no debe subirse al repositorio.
+
+## Preparar el despliegue del backend en Render
+
+El archivo `render.yaml` define el servicio web gratuito, la versión de Node, la comprobación de salud y las variables necesarias. Al crear el Blueprint, Render solicitará `DATABASE_URL` y `FRONTEND_URL`; configura una URL PostgreSQL de producción y el origen exacto del frontend en Vercel. Render genera `JWT_SECRET` y ejecuta `prisma migrate deploy` antes de iniciar la API.
+
+Después de crear la base de producción, carga los datos iniciales **una sola vez** desde un entorno confiable, con `DATABASE_URL`, `SEED_ADMIN_PASSWORD` y `SEED_USER_PASSWORD` configuradas para esa base, y ejecuta `npm run db:seed`. No agregues las credenciales de producción a este repositorio ni uses las claves de ejemplo.
+
+Este Blueprint solo prepara la configuración: no crea ni despliega recursos hasta que lo conectes y lo apliques desde Render. Completa ese paso cuando tengas la URL de Vercel; después, registra las URLs reales en el README de entrega.
