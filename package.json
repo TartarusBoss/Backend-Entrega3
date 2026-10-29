@@ -10,7 +10,7 @@
     "build": "prisma generate && tsc -p tsconfig.json",
     "test": "tsx --test src/interface/auth-middleware.test.ts",
     "verify:deployment": "tsx scripts/verify-deployment.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
